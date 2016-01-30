@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 
-import LcdManager
+from LcdManager import LcdManager
 import RPi.GPIO as GPIO
 
 
