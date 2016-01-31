@@ -19,6 +19,9 @@ pulses = 0
 
 def main():
 
+    global cash
+    global pulses
+    global lastImpulse
     # The GPIO.BOARD option specifies that you are referring to the pins by the number of the pin the the plug the numbers printed on the board (e.g. P1)
     # The GPIO.BCM option means that you are referring to the pins by the "Broadcom SOC channel" number,
 
