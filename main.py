@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO
 import time
 import signal
 import sys
-import decimal
+from decimal import Decimal
 
 # Constants
 PIN_COIN_INTERRUPT = 26
@@ -25,7 +25,7 @@ def main():
     # The GPIO.BOARD option specifies that you are referring to the pins by the number of the pin the the plug the numbers printed on the board (e.g. P1)
     # The GPIO.BCM option means that you are referring to the pins by the "Broadcom SOC channel" number,
 
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BOARD)
 
     ## Setup coin interrupt channel
     GPIO.setup(PIN_COIN_INTERRUPT, GPIO.IN)
@@ -37,7 +37,7 @@ def main():
     while True:
         time.sleep(0.5)
         if((time.time() - lastImpulse > 0.5) and (pulses > 0)):
-            cash = decimal(cash) + decimal(pulses)/decimal(10)
+            cash = Decimal(cash) + Decimal(pulses)/Decimal(10)
             pulses = 0
             print cash
 
