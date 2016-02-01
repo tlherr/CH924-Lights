@@ -5,7 +5,7 @@ import time
 
 class HTTPServer:
 
-    HTTP_HOST = "127.0.0.1"
+    HTTP_HOST = "0.0.0.0"
     HTTP_PORT = 8000
     server = None
 
