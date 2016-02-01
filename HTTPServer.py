@@ -15,6 +15,7 @@ class HTTPServer:
 
     def start_server(self):
         # Setup stuff here...
+        print("Server running")
         self.server.serve_forever()
 
     def signal_handler(self, signal, frame):
