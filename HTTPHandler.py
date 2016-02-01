@@ -1,6 +1,6 @@
 import BaseHTTPServer
 
-class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class HTTPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_HEAD(s):
         s.send_response(200)
         s.send_header("Content-type", "text/html")
