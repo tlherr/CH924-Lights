@@ -9,7 +9,7 @@ import sys
 from decimal import Decimal
 
 # Constants
-PIN_COIN_INTERRUPT = 26
+PIN_COIN_INTERRUPT = 40
 
 # Variables
 cash = 0.00
@@ -28,7 +28,7 @@ def main():
     GPIO.setmode(GPIO.BOARD)
 
     ## Setup coin interrupt channel
-    GPIO.setup(PIN_COIN_INTERRUPT, GPIO.IN)
+    GPIO.setup(PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.add_event_detect(PIN_COIN_INTERRUPT, GPIO.RISING, callback=coinEventHandler)
     #GPIO.add_event_detect(PIN_COIN_INTERRUPT, GPIO.FALLING, callback=coinEventHandler)
 
