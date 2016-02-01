@@ -8,7 +8,7 @@ import signal
 import sys
 from decimal import Decimal
 import threading
-import HTTPServer
+from HTTPServer import HTTPServer
 
 
 
