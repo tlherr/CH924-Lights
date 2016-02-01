@@ -37,7 +37,6 @@ def main():
     print("Setting Pin: {0} to Input mode, pulled down".format(PIN_COIN_INTERRUPT))
     GPIO.setup(PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.add_event_detect(PIN_COIN_INTERRUPT, GPIO.RISING, callback=coinEventHandler)
-    #GPIO.add_event_detect(PIN_COIN_INTERRUPT, GPIO.FALLING, callback=coinEventHandler)
 
     server = HTTPServer()
 
@@ -49,6 +48,7 @@ def main():
     serverThread.daemon = True
     serverThread.start()
 
+
     signal.signal(signal.SIGINT, signal_handler)	# SIGINT = interrupt by CTRL-C
 
     while True:
@@ -56,7 +56,14 @@ def main():
         # Check the current time against the time the last pulse was received
         # If the difference between the two is greater than our interval
         if((time.time() - lastImpulse > PULSE_INTERVAL) and (pulses > 0)):
-            cash = Decimal(cash) + Decimal(pulses)/Decimal(10)
+            if(pulses==10):
+                cash+=1.00
+            elif(pulses==20):
+                cash+=2.00
+            else:
+                # Invalid Coins
+                print("Invalid Coin Received")
+
             print "Pulses: {0}".format(pulses)
             print "Cash: {0}".format(cash)
             pulses = 0

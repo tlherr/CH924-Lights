@@ -10,7 +10,6 @@ class HTTPServer:
     server = None
 
     def __init__(self):
-        print("Initilizing new HTTP Server running on host: {0} port: {1}".format(self.HTTP_HOST, self.HTTP_PORT))
         self.server = BaseHTTPServer.HTTPServer((self.HTTP_HOST, self.HTTP_PORT), HTTPHandler)
 
     def start_server(self):
