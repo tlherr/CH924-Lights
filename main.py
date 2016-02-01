@@ -24,13 +24,17 @@ pulses = 0
 
 def main():
 
+    global pulses
+    global cash
+    global lastImpulse
+
     # The GPIO.BOARD option specifies that you are referring to the pins by the number of the pin the the plug the numbers printed on the board (e.g. P1)
     # The GPIO.BCM option means that you are referring to the pins by the "Broadcom SOC channel" number,
     print("Setting GPIO Mode to Board")
     GPIO.setmode(GPIO.BOARD)
 
     ## Setup coin interrupt channel
-    print("Setting Pin: %s to Input mode, pulled down".format(PIN_COIN_INTERRUPT))
+    print("Setting Pin: {0} to Input mode, pulled down".format(PIN_COIN_INTERRUPT))
     GPIO.setup(PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.add_event_detect(PIN_COIN_INTERRUPT, GPIO.RISING, callback=coinEventHandler)
     #GPIO.add_event_detect(PIN_COIN_INTERRUPT, GPIO.FALLING, callback=coinEventHandler)
@@ -53,8 +57,8 @@ def main():
         # If the difference between the two is greater than our interval
         if((time.time() - lastImpulse > PULSE_INTERVAL) and (pulses > 0)):
             cash = Decimal(cash) + Decimal(pulses)/Decimal(10)
-            print "Pulses: %s".format(pulses)
-            print "Cash: %s".format(cash)
+            print "Pulses: {0}".format(pulses)
+            print "Cash: {0}".format(cash)
             pulses = 0
 
 def signal_handler(signal, frame):
