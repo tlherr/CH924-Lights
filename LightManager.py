@@ -15,6 +15,7 @@ class LightManager:
     lcd_manager = None
 
     def __init__(self, lcd_manager):
+        print("Initializing Light Manager")
         GPIO.setup(self.PIN_LIGHT, GPIO.OUT)
         assert isinstance(lcd_manager, LcdManager)
         self.lcd_manager = lcd_manager
@@ -25,6 +26,7 @@ class LightManager:
         self.activeTime+=seconds
 
     def set_override(self, enabled):
+        print("Setting Light Manager Override")
         assert isinstance(enabled, bool)
         self.override = enabled
         if(self.override):
