@@ -31,7 +31,7 @@ VERSION
     $0.1$
 """
 
-import sys, os, traceback, optparse
+import sys, os, traceback, optparse, signal
 import RPi.GPIO as GPIO
 import time
 import threading
@@ -45,10 +45,10 @@ def main():
 
     # The GPIO.BOARD option specifies that you are referring to the pins by the number of the pin the the plug the numbers printed on the board (e.g. P1)
     # The GPIO.BCM option means that you are referring to the pins by the "Broadcom SOC channel" number,
-    print("Setting GPIO Mode to Board")
+    print("Setting GPIO Mode: {0}".format(GPIO.BOARD))
     GPIO.setmode(GPIO.BOARD)
 
-    # Initialize our Classes
+    # Initialize our Classes, each manager runs its own loop in its own thread
     lcd = LcdManager()
     lights = LightManager(lcd)
     coin_machine = CoinMachineManager(lcd, lights)
@@ -65,7 +65,7 @@ def main():
     coin_thread.daemon = True
     coin_thread.start()
 
-    # Keep the main thread "alive"
+    # Keep the main thread "alive", while stuff is done on the others
     while True:
         time.sleep(1)
 

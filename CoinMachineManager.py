@@ -21,7 +21,7 @@ class CoinMachineManager:
 
     # Variables
     isLocked = False
-    cash = 0.00
+    money = 0.00
     lastImpulse = 0
     pulses = 0
     pricePerHour = 5.00
@@ -36,8 +36,6 @@ class CoinMachineManager:
         GPIO.setup(self.PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(self.PIN_COIN_INTERRUPT, GPIO.RISING, callback=self.coin_event_handler)
 
-        signal.signal(signal.SIGINT, self.signal_handler)        # SIGINT = interrupt by CTRL-C
-
     def coin_event_handler(self, pin):
         self.lastImpulse = time.time()
         self.pulses = self.pulses + 1
@@ -48,24 +46,17 @@ class CoinMachineManager:
             # Check the current time against the time the last pulse was received
             # If the difference between the two is greater than our interval
             if((time.time() - self.lastImpulse > self.PULSE_INTERVAL) and (self.pulses > 0)):
-                # Check the number of pulses received, if valid add to cash counter
+                # Check the number of pulses received, if valid add to money counter
                 if(self.pulses==self.PULSES_DOLLAR):
-                    self.cash+=1.00
-                    self.lcd_manager.set_message("{0} Added. Current Total: {1}".format(locale.currency(1.00), self.cash))
+                    self.money+=1.00
+                    self.lcd_manager.set_message("{0} Added. Current Total: {1}".format(locale.currency(1.00), locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
                 elif(self.pulses==self.PULSES_TOONIE):
-                    self.cash+=2.00
-                    self.lcd_manager.set_message("{0} Added. Current Total: {1}".format(locale.currency(2.00), self.cash))
+                    self.money+=2.00
+                    self.lcd_manager.set_message("{0} Added. Current Total: {1}".format(locale.currency(2.00), locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
                 else:
                     # Invalid Coins
                     self.lcd_manager.display_timed_message(20, "Invalid Coin Provided")
                 self.pulses = 0
 
-
-
-    @staticmethod
-    def signal_handler(signal, frame):
-        print('You pressed Ctrl+C, exiting')
-        GPIO.cleanup()
-        sys.exit(0)
