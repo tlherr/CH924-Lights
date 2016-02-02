@@ -5,7 +5,8 @@ import time
 class LcdManager:
 
     lcd = None
-    message = ""
+    message = "Welcome to Corner Pocket\n"
+    updateInterval = 1
 
     def __init__(self):
         print("Initializing LCD Display")
@@ -23,6 +24,6 @@ class LcdManager:
 
     def run_screen(self):
         while True:
-            time.sleep(0.5)
             self.lcd.clear()
             self.lcd.message(self.message)
+            time.sleep(self.updateInterval)
