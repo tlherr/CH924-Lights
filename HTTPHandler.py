@@ -5,16 +5,17 @@ class HTTPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     coin_machine = None
 
-    def do_HEAD(s):
-        s.send_response(200)
-        s.send_header("Content-type", "text/html")
-        s.end_headers()
-    def do_GET(s):
+    def do_HEAD(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+
+    def do_GET(self):
         """Respond to a GET request."""
-        s.send_response(200)
-        s.send_header("Content-type", "text/html")
-        s.end_headers()
-        s.wfile.write("<html><head><title>Title goes here.</title></head>")
-        s.wfile.write("<body>")
-        s.wfile.write("<p>You accessed path: %s</p>" % s.path)
-        s.wfile.write("</body></html>")
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write("<html><head><title>Title goes here.</title></head>")
+        self.wfile.write("<body>")
+        self.wfile.write("<p>Current Cash</p>" % self.coin_machine.money)
+        self.wfile.write("</body></html>")
