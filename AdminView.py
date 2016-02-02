@@ -1,10 +1,11 @@
 from flask import render_template
-from flask.ext.classy import FlaskView
+from flask.views import View
 
 
-class AdminView(FlaskView):
-    route_base = '/'
+class AdminView(View):
 
-    def index(self):
+    coin_machine = None
+
+    def dispatch_request(self):
         users = "Test"
-        return render_template('admin.html', objects=users)
+        return render_template('admin.html', money=self.coin_machine.money)
