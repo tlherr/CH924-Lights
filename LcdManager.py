@@ -4,8 +4,8 @@ import time
 
 class LcdManager:
     lcd = None
-    message_top = "Welcome to Corner Pocket\n"
-    message_bottom = "Current Hourly Rate: {0}\n"
+    message_top = ">Corner  Pocket<"
+    message_bottom = "Hourly Rate: {0}"
     updateInterval = 1
 
     def __init__(self):
