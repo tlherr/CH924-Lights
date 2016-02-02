@@ -33,6 +33,7 @@ VERSION
 
 import sys, os, traceback, optparse
 import time
+import threading
 from CoinMachineManager import CoinMachineManager
 from LightManager import LightManager
 from LcdManager import LcdManager
@@ -45,6 +46,9 @@ def main():
     # Initialize our Classes
     lcd = LcdManager()
     lights = LightManager(lcd)
+
+    threading.Thread(target=lcd.run_screen,args=()).start()
+    threading.Thread(target=lights.run_lights,args=()).start()
 
     # Just Testing
     lights.set_override(True)
