@@ -11,7 +11,6 @@ class LightManager:
     activation_time = None
     expiration_time = None
     # remaining time in seconds
-    activeTime = 0
     override = False
 
     # Keeping a reference to LCD Manager so we can update text from here
@@ -25,7 +24,6 @@ class LightManager:
     def set_active_time(self, seconds):
         assert isinstance(seconds, int)
         self.activation_time = time.time()
-        self.activeTime = seconds
         self.expiration_time = self.activation_time + timedelta(seconds=seconds)
 
     def add_time_to_active(self, seconds):
@@ -56,10 +54,11 @@ class LightManager:
             # Check the time remaining, if there is no more time and the online override is not currently active
             # disable the light
 
-            if self.override or (self.activeTime > 0):
-                self.activeTime = self.expiration_time-time.time()
+            if self.override:
                 GPIO.output(self.PIN_LIGHT, True)
-                self.lcd_manager.set_message(0, "{0} Left".format(self.seconds_to_time(self.activeTime)))
+            elif self.expiration_time - time.time() > 0:
+                GPIO.output(self.PIN_LIGHT, True)
+                self.lcd_manager.set_message(0, "{0} Left".format(self.seconds_to_time(self.expiration_time - time.time())))
             else:
                 GPIO.output(self.PIN_LIGHT, False)
                 self.lcd_manager.lcd.set_color(0.0, 0.0, 1.0)
