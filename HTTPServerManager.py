@@ -1,5 +1,5 @@
 import BaseHTTPServer
-from HTTPHandler import HTTPHandler
+from flask import Flask
 import time
 
 
@@ -8,20 +8,19 @@ class HTTPServerManager:
     # Variables
     HTTP_HOST = "0.0.0.0"
     HTTP_PORT = 8000
-    server = None
+    app = None
 
     def __init__(self, coin_machine):
-        HTTPHandler.coin_machine = coin_machine
-        self.server = BaseHTTPServer.HTTPServer((self.HTTP_HOST, self.HTTP_PORT), HTTPHandler)
+        app = Flask(__name__)
 
     def start_server(self):
+        self.app.run(debug=False, use_reloader=False)
         print time.asctime(), ">> HTTP Server Started - %s:%s <<" % (self.HTTP_HOST, self.HTTP_PORT)
-        self.server.serve_forever()
-        try:
-            self.server.serve_forever()
-        except KeyboardInterrupt:
-            self.start_server()
 
     def stop_server(self):
-        self.server.server_close()
+        self.app.stop()
         print time.asctime(), ">> HTTP Server Stopped - %s:%s <<" % (self.HTTP_HOST, self.HTTP_PORT)
+
+    @app.route('/')
+    def hello_world(self):
+        return 'Hello World!'

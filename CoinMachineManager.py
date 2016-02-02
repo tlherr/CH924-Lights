@@ -56,8 +56,4 @@ class CoinMachineManager:
                     self.money+=2.00
                     self.lcd_manager.set_message(1,"Money: {0}".format(locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
-                else:
-                    # Invalid Coins
-                    self.lcd_manager.display_timed_message(20, ">>Invalid Coin<<")
                 self.pulses = 0
-

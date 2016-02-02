@@ -6,7 +6,7 @@ class LcdManager:
     lcd = None
     message_top = ">Corner  Pocket<"
     message_bottom = "Hourly Rate: {0}"
-    updateInterval = 1
+    updateInterval = 0.5
 
     def __init__(self):
         print("Initializing LCD Display")
