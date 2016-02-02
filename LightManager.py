@@ -25,6 +25,7 @@ class LightManager:
         assert isinstance(seconds, int)
         self.activation_time = time.time()
         self.expiration_time = self.activation_time + seconds
+        self.lcd_manager.lcd.set_color(0.0, 1.0, 0.0)
 
     def add_time_to_active(self, seconds):
         """add additional time to active (input in seconds expected)
@@ -50,7 +51,7 @@ class LightManager:
 
     def run_lights(self):
         while True:
-            time.sleep(0.5)
+            time.sleep(1)
             # Check the time remaining, if there is no more time and the online override is not currently active
             # disable the light
 
