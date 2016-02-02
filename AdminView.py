@@ -1,23 +1,9 @@
 from flask.views import View
+from flask import render_template, redirect
+
 
 class AdminView(View):
 
-    def get(self, user_id):
-        if user_id is None:
-            # return a list of users
-            pass
-        else:
-            # expose a single user
-            pass
-
-    def post(self):
-        # create a new user
-        pass
-
-    def delete(self, user_id):
-        # delete a single user
-        pass
-
-    def put(self, user_id):
-        # update a single user
-        pass
+    def dispatch_request(self):
+        # templates located in templates directory by default
+        return render_template('admin.html')
