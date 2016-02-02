@@ -5,7 +5,7 @@ sudo apt-get update
 echo "Installing Build Tools"
 sudo apt-get install build-essential python-dev python-smbus python-pip
 echo "Installing Python Dependencies"
-sudo pip install RPi.GPIO Flask
+sudo pip install RPi.GPIO flask flask-classy
 git clone https://github.com/adafruit/Adafruit_Python_CharLCD.git
 cd Adafruit_Python_CharLCD
 sudo python setup.py install

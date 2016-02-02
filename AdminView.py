@@ -1,9 +1,10 @@
-from flask.views import View
-from flask import render_template, redirect
+from flask import render_template
+from flask.ext.classy import FlaskView
 
 
-class AdminView(View):
+class ShowUsers(FlaskView):
+    route_base = '/'
 
-    def dispatch_request(self):
-        # templates located in templates directory by default
-        return render_template('admin.html')
+    def index(self):
+        users = "Test"
+        return render_template('admin.html', objects=users)
