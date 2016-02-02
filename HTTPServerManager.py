@@ -1,5 +1,6 @@
 from flask import Flask
 import time
+import AdminView
 
 
 class HTTPServerManager:
@@ -13,6 +14,8 @@ class HTTPServerManager:
     def __init__(self, coin_machine):
         self.coin_machine = coin_machine
 
+        self.app.add_url_rule('/', view_func=AdminView.as_view('adminview'))
+
     def start_server(self):
         # TODO: Disable debug = True in production environment to avoid remote arbitrary code execution
         self.app.run(host=self.HTTP_HOST, port=self.HTTP_PORT, debug=True, use_reloader=False)
@@ -21,7 +24,3 @@ class HTTPServerManager:
     def stop_server(self):
         self.app.stop()
         print time.asctime(), ">> HTTP Server Stopped - %s:%s <<" % (self.HTTP_HOST, self.HTTP_PORT)
-
-    @app.route('/')
-    def hello_world(self):
-        return 'Hello World!'
