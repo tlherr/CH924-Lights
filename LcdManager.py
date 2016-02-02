@@ -24,6 +24,7 @@ class LcdManager:
 
     def run_screen(self):
         while True:
-            self.lcd.clear()
-            self.lcd.message(self.message)
+            #self.lcd.clear()
+            #self.lcd.message(self.message)
+            print(self.message)
             time.sleep(self.updateInterval)
