@@ -9,6 +9,7 @@ class LightManager:
     PIN_LIGHT = 20
 
     activation_time = None
+    time_remaining = None
     expiration_time = None
     # remaining time in seconds
     override = False
@@ -56,9 +57,10 @@ class LightManager:
 
             if self.override:
                 GPIO.output(self.PIN_LIGHT, True)
-            elif self.expiration_time - time.time() > 0:
+            elif self.expiration_time is not None:
                 GPIO.output(self.PIN_LIGHT, True)
-                self.lcd_manager.set_message(0, "{0} Left".format(self.seconds_to_time(self.expiration_time - time.time())))
+                self.time_remaining = self.expiration_time - time.time()
+                self.lcd_manager.set_message(0, "{0} Left".format(self.seconds_to_time(self.time_remaining)))
             else:
                 GPIO.output(self.PIN_LIGHT, False)
                 self.lcd_manager.lcd.set_color(0.0, 0.0, 1.0)
