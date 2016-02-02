@@ -42,16 +42,24 @@ from HTTPServerManager import HTTPServerManager
 
 def main():
 
-    global options, args
     # Initialize our Classes
     lcd = LcdManager()
     lights = LightManager(lcd)
 
-    threading.Thread(target=lcd.run_screen,args=()).start()
-    threading.Thread(target=lights.run_lights,args=()).start()
+    lcd_thread = threading.Thread(target=lcd.run_screen,args=())
+    lcd_thread.daemon = True
+    lcd_thread.start()
+
+    light_thread = threading.Thread(target=lights.run_lights,args=())
+    light_thread.daemon = True
+    light_thread.start()
 
     # Just Testing
     lights.set_override(True)
+
+    # Keep the main thread "alive"
+    while True:
+        time.sleep(1)
 
 if __name__ == '__main__':
     try:

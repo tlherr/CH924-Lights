@@ -17,7 +17,6 @@ class LightManager:
     def __init__(self, lcd_manager):
         print("Initializing Light Manager")
         GPIO.setup(self.PIN_LIGHT, GPIO.OUT)
-        assert isinstance(lcd_manager, LcdManager)
         self.lcd_manager = lcd_manager
 
     def add_time_to_active(self, seconds):
