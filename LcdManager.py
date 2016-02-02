@@ -16,10 +16,10 @@ class LcdManager:
         assert isinstance(message, str)
         self.message = message
 
-    def display_timed_message(self, time, message):
+    def display_timed_message(self, duration, message):
         message_tmp = self.message
         self.message = message
-        time.sleep(time)
+        time.sleep(duration)
         self.message = message_tmp
 
     def run_screen(self):

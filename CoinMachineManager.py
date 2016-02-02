@@ -40,7 +40,6 @@ class CoinMachineManager:
     def coin_event_handler(self, pin):
         self.lastImpulse = time.time()
         self.pulses = self.pulses + 1
-        print "Pulse Detected"
 
     def run_machine(self):
         while True:
