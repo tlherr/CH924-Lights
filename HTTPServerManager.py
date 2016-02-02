@@ -1,6 +1,6 @@
 from flask import Flask
 import time
-import AdminView
+from AdminView import AdminView
 
 
 class HTTPServerManager:
