@@ -24,10 +24,13 @@ class LcdManager:
         return "{0}\n{1}".format(self.message_top, self.message_bottom)
 
     def display_timed_message(self, duration, message):
-        message_tmp = self.message
-        self.message = message
+        message_top_tmp = self.message_top
+        message_bottom_tmp = self.message_bottom
+        self.message_top = message
+        self.message_bottom = ""
         time.sleep(duration)
-        self.message = message_tmp
+        self.set_message(0, message_top_tmp)
+        self.set_message(1, message_bottom_tmp)
 
     def run_screen(self):
         while True:

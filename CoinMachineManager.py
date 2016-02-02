@@ -27,6 +27,7 @@ class CoinMachineManager:
     pricePerHour = 5.00
 
     def __init__(self, lcd_manager, light_manager):
+        print("Initializing Coin Manager")
         locale.setlocale(locale.LC_ALL, 'en_US.utf8')
         self.lcd_manager = lcd_manager
         self.light_manager = light_manager
@@ -49,14 +50,14 @@ class CoinMachineManager:
                 # Check the number of pulses received, if valid add to money counter
                 if(self.pulses==self.PULSES_DOLLAR):
                     self.money+=1.00
-                    self.lcd_manager.set_message(1,"{0} Added. Total: {1}".format(locale.currency(1.00), locale.currency(self.money)))
+                    self.lcd_manager.set_message(1,"Money: {0}".format(locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
                 elif(self.pulses==self.PULSES_TOONIE):
                     self.money+=2.00
-                    self.lcd_manager.set_message(1,"{0} Added. Total: {1}".format(locale.currency(2.00), locale.currency(self.money)))
+                    self.lcd_manager.set_message(1,"Money: {0}".format(locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
                 else:
                     # Invalid Coins
-                    self.lcd_manager.display_timed_message(20, "Invalid Coin Provided")
+                    self.lcd_manager.display_timed_message(20, ">>Invalid Coin<<")
                 self.pulses = 0
 
