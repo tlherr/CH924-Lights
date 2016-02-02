@@ -45,7 +45,7 @@ def main():
 
     # The GPIO.BOARD option specifies that you are referring to the pins by the number of the pin the the plug the numbers printed on the board (e.g. P1)
     # The GPIO.BCM option means that you are referring to the pins by the "Broadcom SOC channel" number,
-    print("Setting GPIO Mode: {0}".format(GPIO.BCM))
+    print("Setting GPIO Mode: {0} on board type: {1}".format(GPIO.BCM, GPIO.RPI_REVISION))
     GPIO.setmode(GPIO.BCM)
 
     # Initialize our Classes, each manager runs its own loop in its own thread

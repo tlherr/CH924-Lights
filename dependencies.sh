@@ -11,3 +11,6 @@ cd Adafruit_Python_CharLCD
 sudo python setup.py install
 echo "Reconfiguring Locales. Please enable en_US.utf8"
 sudo dpkg-reconfigure locales
+
+echo "Select Advanced Options > Enable I2C Driver/Interface > Load at Boot"
+sudo raspi-config
