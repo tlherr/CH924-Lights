@@ -37,5 +37,5 @@ class LcdManager:
         while True:
             self.lcd.clear()
             self.lcd.message(self.get_message())
-            # print(self.message)
+            print(self.message)
             time.sleep(self.updateInterval)

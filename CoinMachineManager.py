@@ -41,6 +41,7 @@ class CoinMachineManager:
         GPIO.add_event_detect(self.PIN_COIN_INTERRUPT, GPIO.RISING, callback=self.coin_event_handler)
 
     def coin_event_handler(self, pin):
+        print("New Coin Detected")
         self.lastImpulse = time.time()
         self.pulses += 1
 
