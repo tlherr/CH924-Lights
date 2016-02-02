@@ -8,13 +8,13 @@ class HTTPServerManager:
     HTTP_HOST = "0.0.0.0"
     HTTP_PORT = 8000
     coin_machine = None
-    app = Flask(__name__)
+    app = Flask(import_name="CornerPocket")
 
     def __init__(self, coin_machine):
         self.coin_machine = coin_machine
 
     def start_server(self):
-        self.app.run(debug=False, use_reloader=False)
+        self.app.run(host=self.HTTP_HOST, port=self.HTTP_PORT, debug=False, use_reloader=False)
         print time.asctime(), ">> HTTP Server Started - %s:%s <<" % (self.HTTP_HOST, self.HTTP_PORT)
 
     def stop_server(self):
