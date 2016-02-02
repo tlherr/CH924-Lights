@@ -5,7 +5,7 @@ import LcdManager
 # This class manages the control of lights via a powerswitch tail
 class LightManager:
 
-    PIN_LIGHT = 10
+    PIN_LIGHT = 20
 
     # remaining time in seconds
     activeTime = 0
@@ -20,16 +20,26 @@ class LightManager:
         self.lcd_manager = lcd_manager
 
     def add_time_to_active(self, seconds):
-        """add additional time to active (input in seconds expected)"""
+        """add additional time to active (input in seconds expected)
+        :type seconds: int
+        """
         assert isinstance(seconds, int)
-        self.activeTime+=seconds
+        self.activeTime += seconds
+        self.lcd_manager.lcd.set_color(0.0, 1.0, 0.0)
+
+    @staticmethod
+    def seconds_to_time(seconds):
+        m, s = divmod(seconds, 60)
+        h, m = divmod(m, 60)
+        return "%d:%02d:%02d" % (h, m, s)
 
     def set_override(self, enabled):
         print("Setting Light Manager Override")
         assert isinstance(enabled, bool)
         self.override = enabled
         if(self.override):
-            self.lcd_manager.set_message("OVERRIDE ACTIVE")
+            self.lcd_manager.set_message(0, "OVERRIDE ACTIVE")
+            self.lcd_manager.lcd.set_color(1.0, 0.0, 0.0)
 
     def run_lights(self):
         while True:
@@ -39,5 +49,7 @@ class LightManager:
 
             if self.override or (time.time() - self.activeTime > 0):
                 GPIO.output(self.PIN_LIGHT, True)
+                self.lcd_manager.set_message(0,"{0}".format(self.seconds_to_time(self.activeTime)))
             else:
                 GPIO.output(self.PIN_LIGHT, False)
+                self.lcd_manager.lcd.set_color(0.0, 0.0, 1.0)

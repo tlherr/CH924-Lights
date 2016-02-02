@@ -11,6 +11,7 @@ class LcdManager:
     def __init__(self):
         print("Initializing LCD Display")
         self.lcd = LCD.Adafruit_CharLCDPlate()
+        self.lcd.set_color(0.0, 0.0, 1.0)
 
     def set_message(self, line, message):
         assert isinstance(line, int)
@@ -34,7 +35,6 @@ class LcdManager:
 
     def run_screen(self):
         while True:
-            self.lcd.set_color(0.0, 0.0, 1.0)
             self.lcd.clear()
             self.lcd.message(self.get_message())
             # print(self.message)

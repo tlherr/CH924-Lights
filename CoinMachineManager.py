@@ -14,6 +14,9 @@ class CoinMachineManager:
     PULSE_INTERVAL = 0.5
     PULSES_DOLLAR = 10
     PULSES_TOONIE = 20
+    MAXIMUM_TIME = 60*60*2
+    MINIMUM_TIME = 60*30
+    TIMEOUT_INTERVAL = 20
 
     # Managers
     lcd_manager = None
@@ -32,21 +35,31 @@ class CoinMachineManager:
         self.lcd_manager = lcd_manager
         self.light_manager = light_manager
 
-        ## Setup coin interrupt channel
+        # Setup coin interrupt channel
         print("Setting Pin: {0} to Input mode, pulled down".format(self.PIN_COIN_INTERRUPT))
         GPIO.setup(self.PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(self.PIN_COIN_INTERRUPT, GPIO.RISING, callback=self.coin_event_handler)
 
     def coin_event_handler(self, pin):
         self.lastImpulse = time.time()
-        self.pulses = self.pulses + 1
+        self.pulses += 1
 
     def run_machine(self):
         while True:
             time.sleep(0.5)
-            # Check the current time against the time the last pulse was received
-            # If the difference between the two is greater than our interval
-            if((time.time() - self.lastImpulse > self.PULSE_INTERVAL) and (self.pulses > 0)):
+
+            time_since_inpulse = time.time() - self.lastImpulse
+
+            if(self.money>0):
+                time_scalar = (self.money/self.price_per_hour)
+                time_in_seconds = time_scalar*60*60
+
+                if(time_since_inpulse > self.TIMEOUT_INTERVAL and time_in_seconds > self.MINIMUM_TIME):
+                    # Timedout, user is no longer inserting money into the machine
+                    self.light_manager.add_time_to_active(time_in_seconds)
+                    self.money = 0.00
+
+            if((time_since_inpulse > self.PULSE_INTERVAL) and (self.pulses > 0)):
                 # Check the number of pulses received, if valid add to money counter
                 if(self.pulses==self.PULSES_DOLLAR):
                     self.money+=1.00
