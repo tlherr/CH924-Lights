@@ -1,9 +1,9 @@
 import BaseHTTPServer
 from HTTPHandler import HTTPHandler
-import signal
 import time
 
-class HTTPServer:
+
+class HTTPServerManager:
 
     HTTP_HOST = "0.0.0.0"
     HTTP_PORT = 8000
@@ -16,8 +16,10 @@ class HTTPServer:
         print time.asctime(), "HTTP Server Started - %s:%s" % (self.HTTP_HOST, self.HTTP_PORT)
         self.server.serve_forever()
         try:
-           self.server.serve_forever()
+            self.server.serve_forever()
         except KeyboardInterrupt:
-           pass
+            self.start_server()
+
+    def stop_server(self):
         self.server.server_close()
         print time.asctime(), "HTTP Server Stopped - %s:%s" % (self.HTTP_HOST, self.HTTP_PORT)

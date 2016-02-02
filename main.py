@@ -1,87 +1,74 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+"""
+SYNOPSIS
 
+    TODO helloworld [-h,--help] [-v,--verbose] [--version]
 
-from LcdManager import LcdManager
-import RPi.GPIO as GPIO
+DESCRIPTION
+
+    TODO This describes how to use this script. This docstring
+    will be printed by the script if there is an error or
+    if the user requests help (-h or --help).
+
+EXAMPLES
+
+    TODO: Show some examples of how to use this script.
+
+EXIT STATUS
+
+    TODO: List exit codes
+
+AUTHOR
+
+    TODO: Thomas Herr <tom@tlherr.com>
+
+LICENSE
+
+    This script is in the public domain, free from copyrights or restrictions.
+
+VERSION
+
+    $Id$
+"""
+
+import sys, os, traceback, optparse
 import time
-import signal
-import sys
-from decimal import Decimal
-import threading
-from HTTPServer import HTTPServer
+from CoinMachineManager import CoinMachineManager
+from LightManager import LightManager
+from LcdManager import LcdManager
+from HTTPServerManager import HTTPServerManager
 
-
-
-# Constants
-PIN_COIN_INTERRUPT = 40
-PULSE_INTERVAL = 0.5
-
-
-# Variables
-cash = 0.00
-lastImpulse = 0
-pulses = 0
 
 def main():
 
-    global pulses
-    global cash
-    global lastImpulse
+    global options, args
+    # Initialize our Classes
+    lcd = LcdManager()
+    lights = LightManager(lcd)
 
-    # The GPIO.BOARD option specifies that you are referring to the pins by the number of the pin the the plug the numbers printed on the board (e.g. P1)
-    # The GPIO.BCM option means that you are referring to the pins by the "Broadcom SOC channel" number,
-    print("Setting GPIO Mode to Board")
-    GPIO.setmode(GPIO.BOARD)
+    # Just Testing
+    lights.set_override(True)
 
-    ## Setup coin interrupt channel
-    print("Setting Pin: {0} to Input mode, pulled down".format(PIN_COIN_INTERRUPT))
-    GPIO.setup(PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.add_event_detect(PIN_COIN_INTERRUPT, GPIO.RISING, callback=coinEventHandler)
-
-    server = HTTPServer()
-
-    print("Starting server on new thread")
-    serverThread = threading.Thread(target=server.start_server,
-        args=(),
-        kwargs={},
-    )
-    serverThread.daemon = True
-    serverThread.start()
-
-
-    signal.signal(signal.SIGINT, signal_handler)	# SIGINT = interrupt by CTRL-C
-
-    while True:
-        time.sleep(0.5)
-        # Check the current time against the time the last pulse was received
-        # If the difference between the two is greater than our interval
-        if((time.time() - lastImpulse > PULSE_INTERVAL) and (pulses > 0)):
-            if(pulses==10):
-                cash+=1.00
-            elif(pulses==20):
-                cash+=2.00
-            else:
-                # Invalid Coins
-                print("Invalid Coin Received")
-
-            print "Pulses: {0}".format(pulses)
-            print "Cash: {0}".format(cash)
-            pulses = 0
-
-def signal_handler(signal, frame):
-    print('You pressed Ctrl+C, exiting')
-    GPIO.cleanup()
-    sys.exit(0)
-
-
-def coinEventHandler(pin):
-    global lastImpulse
-    global pulses
-    lastImpulse = time.time()
-    pulses = pulses + 1
-    print "Pulse"
-
-
-
-if __name__=="__main__":
-    main()
+if __name__ == '__main__':
+    try:
+        start_time = time.time()
+        parser = optparse.OptionParser(formatter=optparse.TitledHelpFormatter(), usage=globals()['__doc__'], version='$Id$')
+        parser.add_option ('-v', '--verbose', action='store_true', default=False, help='verbose output')
+        (options, args) = parser.parse_args()
+        #if len(args) < 1:
+        #    parser.error ('missing argument')
+        if options.verbose: print time.asctime()
+        main()
+        if options.verbose: print time.asctime()
+        if options.verbose: print 'TOTAL TIME IN MINUTES:',
+        if options.verbose: print (time.time() - start_time) / 60.0
+        sys.exit(0)
+    except KeyboardInterrupt, e: # Ctrl-C
+        raise e
+    except SystemExit, e: # sys.exit()
+        raise e
+    except Exception, e:
+        print 'ERROR, UNEXPECTED EXCEPTION'
+        print str(e)
+        traceback.print_exc()
+        os._exit(1)
