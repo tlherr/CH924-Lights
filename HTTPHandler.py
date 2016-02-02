@@ -17,5 +17,5 @@ class HTTPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write("<html><head><title>Title goes here.</title></head>")
         self.wfile.write("<body>")
-        self.wfile.write("<p>Current Cash</p>" % self.coin_machine.money)
+        self.wfile.write("<p>Current Cash: {:0,.2f}</p>".format(self.coin_machine.money))
         self.wfile.write("</body></html>")
