@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+from datetime import datetime, timedelta
 import LcdManager
 
 # This class manages the control of lights via a powerswitch tail
@@ -7,6 +8,8 @@ class LightManager:
 
     PIN_LIGHT = 20
 
+    activation_time = None
+    expiration_time = None
     # remaining time in seconds
     activeTime = 0
     override = False
@@ -19,13 +22,18 @@ class LightManager:
         GPIO.setup(self.PIN_LIGHT, GPIO.OUT)
         self.lcd_manager = lcd_manager
 
+    def set_active_time(self, seconds):
+        assert isinstance(seconds, int)
+        self.activation_time = time.time()
+        self.activeTime = seconds
+        self.expiration_time = self.activation_time + timedelta(seconds=seconds)
+
     def add_time_to_active(self, seconds):
         """add additional time to active (input in seconds expected)
         :type seconds: int
         """
         assert isinstance(seconds, int)
         self.activeTime += seconds
-        self.lcd_manager.lcd.set_color(0.0, 1.0, 0.0)
 
     @staticmethod
     def seconds_to_time(seconds):
@@ -48,8 +56,9 @@ class LightManager:
             # disable the light
 
             if self.override or (self.activeTime > 0):
+                self.activeTime = self.expiration_time-time.time()
                 GPIO.output(self.PIN_LIGHT, True)
-                self.lcd_manager.set_message(0,"{0}".format(self.seconds_to_time(self.activeTime)))
+                self.lcd_manager.set_message(0, "{0} Left".format(self.seconds_to_time(self.activeTime)))
             else:
                 GPIO.output(self.PIN_LIGHT, False)
                 self.lcd_manager.lcd.set_color(0.0, 0.0, 1.0)
