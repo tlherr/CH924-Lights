@@ -24,7 +24,7 @@ class LightManager:
 
     def set_active_time(self, seconds):
         assert isinstance(seconds, int)
-        self.activation_time = datetime.now()
+        self.activation_time = datetime.datetime.now()
         self.expiration_time = self.activation_time + timedelta(seconds=seconds)
 
     def add_time_to_active(self, seconds):
@@ -59,7 +59,7 @@ class LightManager:
                 GPIO.output(self.PIN_LIGHT, True)
             elif self.expiration_time is not None:
                 GPIO.output(self.PIN_LIGHT, True)
-                self.time_remaining = self.expiration_time.total_seconds() - time.time()
+                self.time_remaining = self.expiration_time - datetime.datetime.now()
                 self.lcd_manager.set_message(0, "{0} Left".format(self.seconds_to_time(self.time_remaining)))
             else:
                 GPIO.output(self.PIN_LIGHT, False)
