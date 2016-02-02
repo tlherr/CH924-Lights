@@ -56,7 +56,7 @@ class CoinMachineManager:
 
                 if(time_since_inpulse > self.TIMEOUT_INTERVAL and time_in_seconds > self.MINIMUM_TIME):
                     # Timedout, user is no longer inserting money into the machine
-                    self.light_manager.add_time_to_active(time_in_seconds)
+                    self.light_manager.set_active_time(time_in_seconds)
                     self.money = 0.00
 
             if((time_since_inpulse > self.PULSE_INTERVAL) and (self.pulses > 0)):

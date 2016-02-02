@@ -34,6 +34,7 @@ class LightManager:
         """
         assert isinstance(seconds, int)
         self.activeTime += seconds
+        self.expiration_time = self.expiration_time + timedelta(seconds=seconds)
 
     @staticmethod
     def seconds_to_time(seconds):
