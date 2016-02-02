@@ -11,7 +11,8 @@ class HTTPServerManager:
     server = None
 
     def __init__(self, coin_machine):
-        self.server = BaseHTTPServer.HTTPServer((self.HTTP_HOST, self.HTTP_PORT), HTTPHandler(coin_machine))
+        HTTPHandler.coin_machine = coin_machine
+        self.server = BaseHTTPServer.HTTPServer((self.HTTP_HOST, self.HTTP_PORT), HTTPHandler)
 
     def start_server(self):
         print time.asctime(), ">> HTTP Server Started - %s:%s <<" % (self.HTTP_HOST, self.HTTP_PORT)
