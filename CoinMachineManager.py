@@ -15,13 +15,22 @@ class CoinMachineManager:
     PULSES_DOLLAR = 10
     PULSES_TOONIE = 20
 
+    # Managers
+    lcd_manager = None
+    light_manager = None
+
     # Variables
+    isLocked = False
     cash = 0.00
     lastImpulse = 0
     pulses = 0
     pricePerHour = 5.00
 
-    def __init__(self):
+    def __init__(self, lcd_manager, light_manager):
+
+        self.lcd_manager = lcd_manager
+        self.light_manager = light_manager
+
         # The GPIO.BOARD option specifies that you are referring to the pins by the number of the pin the the plug the numbers printed on the board (e.g. P1)
         # The GPIO.BCM option means that you are referring to the pins by the "Broadcom SOC channel" number,
         print("Setting GPIO Mode to Board")
@@ -48,13 +57,15 @@ class CoinMachineManager:
                 # Check the number of pulses received, if valid add to cash counter
                 if(self.pulses==self.PULSES_DOLLAR):
                     self.cash+=1.00
+                    self.lcd_manager.display_timed_message(20, "{0} Added. Current Total: {1}".format(1.00, self.cash))
                     # New currency has been added, tell the Lights class
                 elif(self.pulses==self.PULSES_TOONIE):
                     self.cash+=2.00
+                    self.lcd_manager.display_timed_message(20, "{0} Added. Current Total: {1}".format(2.00, self.cash))
                     # New currency has been added, tell the Lights class
                 else:
                     # Invalid Coins
-                    print("Invalid Coin Received")
+                    self.lcd_manager.display_timed_message(20, "Invalid Coin Provided")
                 self.pulses = 0
 
 

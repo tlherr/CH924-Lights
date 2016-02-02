@@ -45,6 +45,8 @@ def main():
     # Initialize our Classes
     lcd = LcdManager()
     lights = LightManager(lcd)
+    coin_machine = CoinMachineManager(lcd, lights)
+
 
     lcd_thread = threading.Thread(target=lcd.run_screen,args=())
     lcd_thread.daemon = True
@@ -54,8 +56,7 @@ def main():
     light_thread.daemon = True
     light_thread.start()
 
-    # Just Testing
-    lights.set_override(True)
+
 
     # Keep the main thread "alive"
     while True:
