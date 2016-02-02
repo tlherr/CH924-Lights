@@ -20,11 +20,11 @@ class CoinMachineManager:
     light_manager = None
 
     # Variables
-    isLocked = False
+    is_locked = False
     money = 0.00
     lastImpulse = 0
     pulses = 0
-    pricePerHour = 5.00
+    price_per_hour = 5.00
 
     def __init__(self, lcd_manager, light_manager):
         print("Initializing Coin Manager")
