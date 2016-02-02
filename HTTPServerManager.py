@@ -1,4 +1,3 @@
-import BaseHTTPServer
 from flask import Flask
 import time
 
@@ -8,10 +7,11 @@ class HTTPServerManager:
     # Variables
     HTTP_HOST = "0.0.0.0"
     HTTP_PORT = 8000
-    app = None
+    coin_machine = None
+    app = Flask(__name__)
 
     def __init__(self, coin_machine):
-        self.app = Flask(__name__)
+        self.coin_machine = coin_machine
 
     def start_server(self):
         self.app.run(debug=False, use_reloader=False)
