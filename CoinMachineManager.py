@@ -52,7 +52,7 @@ class CoinMachineManager:
 
             if(self.money>0):
                 time_scalar = (self.money/self.price_per_hour)
-                time_in_seconds = time_scalar*60*60
+                time_in_seconds = int(time_scalar*60*60)
 
                 if(time_since_inpulse > self.TIMEOUT_INTERVAL and time_in_seconds > self.MINIMUM_TIME):
                     # Timedout, user is no longer inserting money into the machine

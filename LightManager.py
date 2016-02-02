@@ -47,7 +47,7 @@ class LightManager:
             # Check the time remaining, if there is no more time and the online override is not currently active
             # disable the light
 
-            if self.override or (time.time() - self.activeTime > 0):
+            if self.override or (self.activeTime > 0):
                 GPIO.output(self.PIN_LIGHT, True)
                 self.lcd_manager.set_message(0,"{0}".format(self.seconds_to_time(self.activeTime)))
             else:
