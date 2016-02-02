@@ -1,7 +1,6 @@
-from flask.views import MethodView
+from flask.views import View
 
-
-class AdminView(MethodView):
+class AdminView(View):
 
     def get(self, user_id):
         if user_id is None:
