@@ -11,7 +11,7 @@ class HTTPServerManager:
     app = None
 
     def __init__(self, coin_machine):
-        app = Flask(__name__)
+        self.app = Flask(__name__)
 
     def start_server(self):
         self.app.run(debug=False, use_reloader=False)
