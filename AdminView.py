@@ -7,5 +7,4 @@ class AdminView(View):
     coin_machine = None
 
     def dispatch_request(self):
-        users = "Test"
-        return render_template('admin.html', money=self.coin_machine.money)
+        return render_template('admin.html', coin_machine=self.coin_machine)
