@@ -52,6 +52,7 @@ def main():
     lcd = LcdManager()
     lights = LightManager(lcd)
     coin_machine = CoinMachineManager(lcd, lights)
+    http_server = HTTPServerManager(coin_machine)
 
     lcd_thread = threading.Thread(target=lcd.run_screen,args=())
     lcd_thread.daemon = True
@@ -64,6 +65,13 @@ def main():
     coin_thread = threading.Thread(target=coin_machine.run_machine,args=())
     coin_thread.daemon = True
     coin_thread.start()
+
+    httpd_thread = threading.Thread(target=http_server.start_server,args=())
+    httpd_thread.daemon = True
+    httpd_thread.start()
+
+    print("All Threads Running. Application Ready")
+
 
     # Keep the main thread "alive", while stuff is done on the others
     while True:
