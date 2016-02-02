@@ -14,7 +14,8 @@ class HTTPServerManager:
         self.coin_machine = coin_machine
 
     def start_server(self):
-        self.app.run(host=self.HTTP_HOST, port=self.HTTP_PORT, debug=False, use_reloader=False)
+        # TODO: Disable debug = True in production environment to avoid remote arbitrary code execution
+        self.app.run(host=self.HTTP_HOST, port=self.HTTP_PORT, debug=True, use_reloader=False)
         print time.asctime(), ">> HTTP Server Started - %s:%s <<" % (self.HTTP_HOST, self.HTTP_PORT)
 
     def stop_server(self):
