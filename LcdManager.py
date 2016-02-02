@@ -10,7 +10,7 @@ class LcdManager:
 
     def __init__(self):
         print("Initializing LCD Display")
-        self.lcd = LCD.Adafruit_CharLCD()
+        #self.lcd = LCD.Adafruit_CharLCD()
 
     def set_message(self, message):
         assert isinstance(message, str)

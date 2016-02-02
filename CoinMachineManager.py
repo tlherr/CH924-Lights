@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from LcdManager import LcdManager
 import RPi.GPIO as GPIO
 import time
 import signal
@@ -30,11 +29,6 @@ class CoinMachineManager:
 
         self.lcd_manager = lcd_manager
         self.light_manager = light_manager
-
-        # The GPIO.BOARD option specifies that you are referring to the pins by the number of the pin the the plug the numbers printed on the board (e.g. P1)
-        # The GPIO.BCM option means that you are referring to the pins by the "Broadcom SOC channel" number,
-        print("Setting GPIO Mode to Board")
-        GPIO.setmode(GPIO.BOARD)
 
         ## Setup coin interrupt channel
         print("Setting Pin: {0} to Input mode, pulled down".format(self.PIN_COIN_INTERRUPT))

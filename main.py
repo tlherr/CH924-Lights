@@ -32,6 +32,7 @@ VERSION
 """
 
 import sys, os, traceback, optparse
+import RPi.GPIO as GPIO
 import time
 import threading
 from CoinMachineManager import CoinMachineManager
@@ -41,6 +42,11 @@ from HTTPServerManager import HTTPServerManager
 
 
 def main():
+
+    # The GPIO.BOARD option specifies that you are referring to the pins by the number of the pin the the plug the numbers printed on the board (e.g. P1)
+    # The GPIO.BCM option means that you are referring to the pins by the "Broadcom SOC channel" number,
+    print("Setting GPIO Mode to Board")
+    GPIO.setmode(GPIO.BOARD)
 
     # Initialize our Classes
     lcd = LcdManager()
