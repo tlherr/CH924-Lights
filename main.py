@@ -47,7 +47,6 @@ def main():
     lights = LightManager(lcd)
     coin_machine = CoinMachineManager(lcd, lights)
 
-
     lcd_thread = threading.Thread(target=lcd.run_screen,args=())
     lcd_thread.daemon = True
     lcd_thread.start()
@@ -56,7 +55,9 @@ def main():
     light_thread.daemon = True
     light_thread.start()
 
-
+    coin_thread = threading.Thread(target=coin_machine.run_machine,args=())
+    coin_thread.daemon = True
+    coin_thread.start()
 
     # Keep the main thread "alive"
     while True:
