@@ -5,9 +5,6 @@ class HTTPHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     coin_machine = None
 
-    def __init__(self, coin_machine):
-        self.coin_machine = coin_machine
-
     def do_HEAD(s):
         s.send_response(200)
         s.send_header("Content-type", "text/html")
