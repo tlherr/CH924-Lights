@@ -10,7 +10,7 @@ import locale
 class CoinMachineManager:
 
     # Constants
-    PIN_COIN_INTERRUPT = 40
+    PIN_COIN_INTERRUPT = 21
     PULSE_INTERVAL = 0.5
     PULSES_DOLLAR = 10
     PULSES_TOONIE = 20
