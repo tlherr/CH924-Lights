@@ -1,3 +1,3 @@
 #!/bin/bash
 
-nohup python main.py &
+nohup python /home/pi/CH924-Lights/main.py &
