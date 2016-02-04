@@ -62,12 +62,13 @@ class CoinMachineManager:
 
             if((time_since_inpulse > self.PULSE_INTERVAL) and (self.pulses > 0)):
                 # Check the number of pulses received, if valid add to money counter
-                if(self.pulses==self.PULSES_DOLLAR):
+                if(self.pulses % self.PULSES_DOLLAR == 0):
+                    self.pulses -= 10
                     self.money+=1.00
                     self.lcd_manager.set_message(1,"Money: {0}".format(locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
                 elif(self.pulses==self.PULSES_TOONIE):
+                    self.pulses -= 20
                     self.money+=2.00
                     self.lcd_manager.set_message(1,"Money: {0}".format(locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
-                self.pulses = 0
