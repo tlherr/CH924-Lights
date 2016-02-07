@@ -10,8 +10,9 @@ class HTTPServerManager:
     HTTP_PORT = 8000
     app = Flask(import_name="CornerPocket")
 
-    def __init__(self, coin_machine):
+    def __init__(self, coin_machine, light_manager):
         AdminView.coin_machine = coin_machine
+        AdminView.light_manager = light_manager
         self.app.add_url_rule('/admin', view_func=AdminView.as_view('admin_view'), methods=['GET','POST',])
 
     def start_server(self):
