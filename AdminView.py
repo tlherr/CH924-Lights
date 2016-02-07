@@ -12,5 +12,5 @@ class AdminView(MethodView):
 
     def post(self):
         override = (bool)(request.form['light_override'])
-        self.light_manager.override = override
+        self.light_manager.set_override(self.light_manager, override)
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
