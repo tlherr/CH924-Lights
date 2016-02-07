@@ -5,7 +5,7 @@
           url: '/admin',
           method: 'POST',
           data: {
-              light_override: true
+              light_override: 1
           }
         });
     });
@@ -15,7 +15,7 @@
           url: '/admin',
           method: 'POST',
           data: {
-              light_override: false
+              light_override: 0
           }
         });
     });
