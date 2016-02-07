@@ -12,7 +12,7 @@ class HTTPServerManager:
 
     def __init__(self, coin_machine):
         AdminView.coin_machine = coin_machine
-        self.app.add_url_rule('/', view_func=AdminView.as_view('admin_view'))
+        self.app.add_url_rule('/admin', view_func=AdminView.as_view('admin_view'), methods=['GET','POST',])
 
     def start_server(self):
         # TODO: Disable debug = True in production environment to avoid remote arbitrary code execution
