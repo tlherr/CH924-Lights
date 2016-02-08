@@ -62,15 +62,15 @@
                                 <div class="list-group">
                                     <a href="#" class="list-group-item">
                                         <span class="badge">{{ coin_machine.money }}</span>
-                                        <i class="fa fa-fw fa-calendar"></i> Money
+                                        <span id="money" data-money="{{ coin_machine.money }}">Money</span>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         <span class="badge">{{ coin_machine.price_per_hour }}</span>
-                                        <i class="fa fa-fw fa-comment"></i> Price Per Hour
+                                        <span id="hourly_rate" data-price_per_hour="{{ coin_machine.price_per_hour }}">Price Per Hour</span>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         <span class="badge">{{ coin_machine.is_locked }}</span>
-                                        <i class="fa fa-fw fa-truck"></i> Locked Status
+                                        <span id="locked" data-is_locked="{{ coin_machine.id_locked }}">Locked Status</span>
                                     </a>
                                 </div>
                                 {% endif %}
@@ -86,19 +86,19 @@
                                 <div class="list-group">
                                     <a href="#" class="list-group-item">
                                         <span class="badge">{{ light_manager.activation_time }}</span>
-                                        <i class="fa fa-fw fa-calendar"></i> Time Activated
+                                        <span id="time_activated" data-activation_time="{{ light_manager.activation_time }}">Time Activated</span>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         <span class="badge">{{ light_manager.time_remaining }}</span>
-                                        <i class="fa fa-fw fa-comment"></i> Time Remaining
+                                        <span id="time_remaining" data-time_remaning="{{ light_manager.time_remaining }}">Time Remaining</span>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         <span class="badge">{{ light_manager.expiration_time }}</span>
-                                        <i class="fa fa-fw fa-truck"></i> Time Expires
+                                        <span id="time_expires" data-expiration_time="{{ light_manager.expiration_time }}">Time Expires</span>
                                     </a>
                                     <a href="#" class="list-group-item">
                                         <span class="badge">{{ light_manager.override }}</span>
-                                        <i class="fa fa-fw fa-truck"></i> Override
+                                        <span id="override" data-override="{{ light_manager.override }}">Override Status</span>
                                     </a>
                                 </div>
                                 {% endif %}
@@ -119,6 +119,7 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
         <script src="static/js/vendor/bootstrap.js"></script>
         <script src="static/js/plugins.js"></script>
+        <script src="static/js/vendor/jquery.countdown.min.js"></script>
         <script src="static/js/main.js"></script>
     </body>
 </html>
