@@ -25,6 +25,7 @@ class LightManager:
         assert isinstance(seconds, int)
         self.activation_time = time.time()
         self.expiration_time = self.activation_time + seconds
+        self.time_remaining = self.expiration_time - time.time()
         self.lcd_manager.lcd.set_color(0.0, 1.0, 0.0)
 
     def add_time_to_active(self, seconds):
