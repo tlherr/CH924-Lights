@@ -41,7 +41,7 @@
                                 <button class="btn btn-success" id="light_enable">Turn On Light</button>
                                 <button class="btn btn-danger" id="light_disable">Turn Off Light</button>
 
-                                <form action="/submit">
+                                <form action="/" method="post">
                                   <div class="form-group">
                                     <label for="price_per_hour">Price Per Hour</label>
                                     <input type="number" class="form-control" name="price_per_hour" id="price_per_hour" type="number" min="5" max="10" step="0.5" placeholder="{{ coin_machine.price_per_hour }}">

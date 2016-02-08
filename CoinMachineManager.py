@@ -40,7 +40,7 @@ class CoinMachineManager:
         GPIO.setup(self.PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         GPIO.add_event_detect(self.PIN_COIN_INTERRUPT, GPIO.RISING, callback=self.coin_event_handler)
 
-    def set_hourly_rate(self, rate):
+    def set_price_per_hour(self, rate):
         self.price_per_hour = rate
         self.lcd_manager.set_message(1,"Per Hour: {0}".format(locale.currency(self.price_per_hour)))
 
