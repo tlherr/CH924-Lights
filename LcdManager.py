@@ -5,13 +5,14 @@ import time
 class LcdManager:
     lcd = None
     message_top = ">Corner  Pocket<"
-    message_bottom = "Hourly Rate: {0}"
-    updateInterval = 0.5
+    message_bottom = "Per Hour: $5.00"
+    updateInterval = 1
 
     def __init__(self):
         print("Initializing LCD Display")
         self.lcd = LCD.Adafruit_CharLCDPlate()
         self.lcd.set_color(0.0, 0.0, 1.0)
+
 
     def set_message(self, line, message):
         assert isinstance(line, int)
@@ -35,7 +36,6 @@ class LcdManager:
 
     def run_screen(self):
         while True:
-            time.sleep(1)
             self.lcd.clear()
             self.lcd.message(self.get_message())
             print(self.get_message())
