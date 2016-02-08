@@ -55,7 +55,7 @@
                     <div class="col-lg-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Information</h3>
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Coin Machine Information</h3>
                             </div>
                             <div class="panel-body">
                                 {% if coin_machine %}
@@ -71,6 +71,35 @@
                                     <a href="#" class="list-group-item">
                                         <span class="badge">{{ coin_machine.is_locked }}</span>
                                         <i class="fa fa-fw fa-truck"></i> Locked Status
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Light Information</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if light_manager %}
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">{{ light_manager.activation_time }}</span>
+                                        <i class="fa fa-fw fa-calendar"></i> Time Activated
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">{{ light_manager.time_remaining }}</span>
+                                        <i class="fa fa-fw fa-comment"></i> Time Remaining
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">{{ light_manager.expiration_time }}</span>
+                                        <i class="fa fa-fw fa-truck"></i> Time Expires
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <span class="badge">{{ light_manager.override }}</span>
+                                        <i class="fa fa-fw fa-truck"></i> Override
                                     </a>
                                 </div>
                                 {% endif %}

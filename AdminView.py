@@ -8,7 +8,7 @@ class AdminView(MethodView):
     light_manager = None
 
     def get(self):
-        return render_template('admin.html', coin_machine=self.coin_machine)
+        return render_template('admin.html', coin_machine=self.coin_machine, light_manager = self.light_manager)
 
     def post(self):
         light_override = request.form.get('light_override')
