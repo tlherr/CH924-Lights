@@ -11,6 +11,11 @@ class AdminView(MethodView):
         return render_template('admin.html', coin_machine=self.coin_machine)
 
     def post(self):
-        override = request.form.get('light_override')
+        light_override = request.form.get('light_override')
+        if light_override== "0":
+            override = False
+        elif light_override== "1":
+            override = True
+
         self.light_manager.set_override(override)
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
