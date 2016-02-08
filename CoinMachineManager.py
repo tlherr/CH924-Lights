@@ -60,6 +60,7 @@ class CoinMachineManager:
                 time_in_seconds = int(time_scalar*60*60)
 
                 if(time_since_inpulse > self.TIMEOUT_INTERVAL and time_in_seconds > self.MINIMUM_TIME):
+                    print("Timeout triggered, converting money into time")
                     # Timedout, user is no longer inserting money into the machine
                     self.light_manager.set_active_time(time_in_seconds)
                     self.money = 0.00
