@@ -45,7 +45,7 @@ class CoinMachineManager:
         self.lcd_manager.set_message(1,"Per Hour: {0}".format(locale.currency(self.price_per_hour)))
 
     def coin_event_handler(self, pin):
-        print("New Coin Detected")
+        print("Pulse Detected. Current Count: {0}".format(self.pulses))
         self.lastImpulse = time.time()
         self.pulses += 1
 
@@ -68,17 +68,20 @@ class CoinMachineManager:
                     self.money = 0.00
 
             if((time_since_inpulse > self.PULSE_INTERVAL)):
-
+                print("Pulses: {0}".format(self.pulses))
                 if(self.pulses > 0 and self.pulses < self.PULSES_DOLLAR):
+                    print("Pulses between 0 and 9 after a timeout, must be interference")
                     # line interference must be happening, reset the pulses back down to zero
                     self.pulses = 0
                 # Check the number of pulses received, if valid add to money counter
                 elif(self.pulses >= self.PULSES_DOLLAR and self.pulses < self.PULSES_TOONIE):
+                    print("Pulses between 10 and 19 after a timeout, must be a loonie")
                     self.pulses -= 10
                     self.money+=1.00
                     self.lcd_manager.set_message(1,"Money: {0}".format(locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
                 elif(self.pulses >= self.PULSES_TOONIE):
+                    print("Pulses above 20 after a timeout, must be a toonie")
                     self.pulses -= 20
                     self.money+=2.00
                     self.lcd_manager.set_message(1,"Money: {0}".format(locale.currency(self.money)))
