@@ -50,7 +50,7 @@ class LightManager:
             self.lcd_manager.lcd.set_color(1.0, 0.0, 0.0)
         else:
             self.lcd_manager.set_message(0, ">Corner Pocket<")
-            self.lcd.set_color(0.0, 0.0, 1.0)
+            self.lcd_manager.lcd.set_color(0.0, 0.0, 1.0)
 
     def run_lights(self):
         while True:
