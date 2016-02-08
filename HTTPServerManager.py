@@ -1,6 +1,7 @@
 from flask import Flask
 import time
 from AdminView import AdminView
+from RESTView import RESTView
 
 
 class HTTPServerManager:
@@ -13,7 +14,10 @@ class HTTPServerManager:
     def __init__(self, coin_machine, light_manager):
         AdminView.coin_machine = coin_machine
         AdminView.light_manager = light_manager
+        RESTView.coin_machine = coin_machine
+        RESTView.light_manager = light_manager
         self.app.add_url_rule('/admin', view_func=AdminView.as_view('admin_view'), methods=['GET','POST',])
+        self.app.add_url_rule('/api', view_func=RESTView.as_view('rest_view'), methods=['GET','POST',])
 
     def start_server(self):
         # TODO: Disable debug = True in production environment to avoid remote arbitrary code execution
