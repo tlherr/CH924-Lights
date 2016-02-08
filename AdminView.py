@@ -1,7 +1,5 @@
 from flask import render_template, request
 from flask.views import MethodView
-from decimal import Decimal
-import json
 
 
 class AdminView(MethodView):
@@ -16,7 +14,7 @@ class AdminView(MethodView):
         price_per_hour = request.form.get('price_per_hour')
         if price_per_hour is not None:
             try:
-                price = Decimal(price_per_hour)
+                price = float(price_per_hour)
                 self.coin_machine.set_price_per_hour(price)
             except ValueError:
                 error = "Invalid Value"
