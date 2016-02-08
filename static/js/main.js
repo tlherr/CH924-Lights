@@ -3,8 +3,6 @@
     $(document).ready(function() {
         var timeRemaning = $('#time_remaining');
 
-        timeRemaning.countdown(timeRemaning.data('time_remaining'));
-
         $('#light_enable').click(function(event) {
             $.ajax({
               url: '/admin',
