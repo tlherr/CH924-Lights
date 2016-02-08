@@ -64,6 +64,7 @@ class CoinMachineManager:
                     print("Setting Active Time {0}".format(time_in_seconds))
                     # Timedout, user is no longer inserting money into the machine
                     self.light_manager.set_active_time(time_in_seconds)
+                    self.lcd_manager.set_message(1,"Per Hour: {0}".format(locale.currency(self.price_per_hour)))
                     self.money = 0.00
 
             if((time_since_inpulse > self.PULSE_INTERVAL)):

@@ -70,6 +70,7 @@ class LightManager:
                     self.lcd_manager.set_message(0, "{0} Left".format(self.seconds_to_time(self.time_remaining)))
                 else:
                     print("Light Manager disabled light")
+                    self.lcd_manager.set_message(0, ">Corner Pocket<")
                     self.time_remaining = None
                     GPIO.output(self.PIN_LIGHT, False)
                     self.lcd_manager.lcd.set_color(0.0, 0.0, 1.0)
