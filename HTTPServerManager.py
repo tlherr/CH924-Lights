@@ -1,5 +1,5 @@
 from flask import Flask
-import time
+import time, logging
 from AdminView import AdminView
 from RESTView import RESTView
 
@@ -11,6 +11,9 @@ class HTTPServerManager:
     app = Flask(import_name="CornerPocket")
 
     def __init__(self, coin_machine, light_manager):
+        log = logging.getLogger('werkzeug')
+        log.setLevel(logging.ERROR)
+
         AdminView.coin_machine = coin_machine
         AdminView.light_manager = light_manager
         RESTView.coin_machine = coin_machine
@@ -19,7 +22,7 @@ class HTTPServerManager:
         self.app.add_url_rule('/api', view_func=RESTView.as_view('rest_view'), methods=['GET', 'POST', ])
 
     def start_server(self):
-        self.app.run(host=self.HTTP_HOST, port=self.HTTP_PORT, debug=False, use_reloader=False, use_evalex=False)
+        self.app.run(host=self.HTTP_HOST, port=self.HTTP_PORT, debug=False, use_reloader=False)
         print time.asctime(), ">> HTTP Server Started - %s:%s <<" % (self.HTTP_HOST, self.HTTP_PORT)
 
     def stop_server(self):
