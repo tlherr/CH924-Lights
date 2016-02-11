@@ -15,17 +15,16 @@ class CoinMachineDiag:
     pulses = 0
     count = 0
 
-    def __init__(self):
-        print("Initializing Coin Machine Diagnostic Tool")
+    print("Initializing Coin Machine Diagnostic Tool")
 
-        # Setup coin interrupt channel
-        print("Setting Pin: {0} to Input mode, pulled down".format(self.PIN_COIN_INTERRUPT))
-        GPIO.setup(self.PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(self.PIN_COIN_INTERRUPT, GPIO.RISING, callback=self.coin_event_handler)
+    # Setup coin interrupt channel
+    print("Setting Pin: {0} to Input mode, pulled down".format(self.PIN_COIN_INTERRUPT))
+    GPIO.setup(self.PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.add_event_detect(self.PIN_COIN_INTERRUPT, GPIO.RISING, callback=self.coin_event_handler)
 
-        print("Setting Pin: {0} to Input mode, pulled down".format(self.PIN_COIN_COUNT))
-        GPIO.setup(self.PIN_COIN_COUNT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(self.PIN_COIN_COUNT, GPIO.RISING, callback=self.coin_count_handler)
+    print("Setting Pin: {0} to Input mode, pulled down".format(self.PIN_COIN_COUNT))
+    GPIO.setup(self.PIN_COIN_COUNT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.add_event_detect(self.PIN_COIN_COUNT, GPIO.RISING, callback=self.coin_count_handler)
 
     def coin_event_handler(self, pin):
         print("Pulse Detected on Pin: {0}. Current Count: {1}".format(pin, self.pulses))
