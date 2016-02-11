@@ -49,20 +49,11 @@ class LightManager:
 
         self.activation_time = time.time()
         if seconds > self.MAXIMUM_TIME:
-            self.expiration_time = self.MAXIMUM_TIME
+            self.expiration_time = self.activation_time + self.MAXIMUM_TIME
         else:
             self.expiration_time = self.activation_time + seconds
 
-        if self.time_remaining is not None:
-            tmp = seconds + self.time_remaining
-        else:
-            tmp = seconds
-
-        if tmp > self.MAXIMUM_TIME:
-            self.time_remaining = self.MAXIMUM_TIME
-        else:
-            self.time_remaining = self.expiration_time - time.time()
-
+        self.time_remaining = self.expiration_time - time.time()
         self.lcd_manager.lcd.set_color(0.0, 1.0, 0.0)
 
     def add_time_to_active(self, seconds):
@@ -70,8 +61,13 @@ class LightManager:
         :type seconds: int
         """
         assert isinstance(seconds, int)
-        self.time_remaining += seconds
-        self.expiration_time += seconds
+
+        if self.check_max_time(seconds):
+            self.time_remaining += seconds
+            self.expiration_time += seconds
+        else:
+            self.time_remaining = self.MAXIMUM_TIME
+            self.expiration_time = self.activation_time + self.MAXIMUM_TIME
 
     @staticmethod
     def seconds_to_time(seconds):

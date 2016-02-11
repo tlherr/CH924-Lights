@@ -53,26 +53,27 @@ class CoinMachineManager:
                 time_scalar = (self.money / self.price_per_hour)
                 time_in_seconds = int(time_scalar * 60 * 60)
 
+                if self.light_manager.is_active():
+                        print("Adding Additional Time {0}".format(time_in_seconds))
+                        self.light_manager.add_time_to_active(time_in_seconds)
+                        self.money = 0.00
+
                 if time_since_impulse > self.TIMEOUT_INTERVAL:
                     # Timed out, no money has been inserted in the last 20 seconds.
                     # Assume the user is done entering coins
-                    if self.light_manager.is_active():
-                        print("Adding Additional Time {0}".format(time_in_seconds))
-                        self.light_manager.add_active_time(time_in_seconds)
+
+                    # Need to have at least the minimum amount required in order to activate
+                    if self.light_manager.check_min_time(time_in_seconds):
+                        print("Timeout triggered, converting money into time")
+                        print("Setting Active Time {0}".format(time_in_seconds))
+                        # Timed out, user is no longer inserting money into the machine
+                        self.light_manager.set_active_time(time_in_seconds)
+                        self.lcd_manager.set_message(1, "Per Hour: {0}".format(locale.currency(self.price_per_hour)))
+                        # Reset money for a new transaction
                         self.money = 0.00
                     else:
-                        # Need to have at least the minimum amount required in order to activate
-                        if self.light_manager.check_min_time(time_in_seconds):
-                            print("Timeout triggered, converting money into time")
-                            print("Setting Active Time {0}".format(time_in_seconds))
-                            # Timed out, user is no longer inserting money into the machine
-                            self.light_manager.set_active_time(time_in_seconds)
-                            self.lcd_manager.set_message(1, "Per Hour: {0}".format(locale.currency(self.price_per_hour)))
-                            # Reset money for a new transaction
-                            self.money = 0.00
-                        else:
-                            self.lcd_manager.set_message(1, "{0} Req. Cur {1}".format(
-                                locale.currency(self.price_per_hour / 2)), locale.currency(self.money))
+                        self.lcd_manager.set_message(1, "{0} Req. Cur {1}".format(
+                            locale.currency(self.price_per_hour / 2)), locale.currency(self.money))
 
             if time_since_impulse > self.PULSE_INTERVAL:
                 print("Pulses: {0}".format(self.pulses))
