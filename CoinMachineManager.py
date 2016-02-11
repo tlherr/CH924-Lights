@@ -86,11 +86,12 @@ class CoinMachineManager:
                     print("Pulses between 10 and 19 after a timeout, must be a loonie")
                     self.pulses -= 10
                     self.money += 1.00
-                    self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
-                    # New currency has been added, tell the Lights class
+                    if not self.light_manager.is_active():
+                        self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
                 elif self.pulses >= self.PULSES_TOONIE:
                     print("Pulses above 20 after a timeout, must be a toonie")
                     self.pulses -= 20
                     self.money += 2.00
-                    self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
+                    if not self.light_manager.is_active():
+                        self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
