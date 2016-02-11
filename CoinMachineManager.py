@@ -2,20 +2,15 @@
 
 import RPi.GPIO as GPIO
 import time
-import signal
-import sys
 import locale
 
 
 class CoinMachineManager:
-
     # Constants
     PIN_COIN_INTERRUPT = 21
     PULSE_INTERVAL = 0.5
     PULSES_DOLLAR = 10
     PULSES_TOONIE = 20
-    MAXIMUM_TIME = 60*60*2
-    MINIMUM_TIME = 60*30
     TIMEOUT_INTERVAL = 20
 
     # Managers
@@ -42,47 +37,47 @@ class CoinMachineManager:
 
     def set_price_per_hour(self, rate):
         self.price_per_hour = rate
-        self.lcd_manager.set_message(1,"Per Hour: {0}".format(locale.currency(self.price_per_hour)))
+        self.lcd_manager.set_message(1, "Per Hour: {0}".format(locale.currency(self.price_per_hour)))
 
     def coin_event_handler(self, pin):
-        print("Pulse Detected. Current Count: {0}".format(self.pulses))
+        print("Pulse Detected on Pin: {0}. Current Count: {1}".format(pin, self.pulses))
         self.lastImpulse = time.time()
         self.pulses += 1
 
     def run_machine(self):
         while True:
             time.sleep(0.5)
+            time_since_impulse = time.time() - self.lastImpulse
 
-            time_since_inpulse = time.time() - self.lastImpulse
+            if self.money > 0:
+                time_scalar = (self.money / self.price_per_hour)
+                time_in_seconds = int(time_scalar * 60 * 60)
 
-            if(self.money>0):
-                time_scalar = (self.money/self.price_per_hour)
-                time_in_seconds = int(time_scalar*60*60)
-
-                if(time_since_inpulse > self.TIMEOUT_INTERVAL and time_in_seconds > self.MINIMUM_TIME):
+                if time_since_impulse > self.TIMEOUT_INTERVAL and self.light_manager.check_time(time_in_seconds):
                     print("Timeout triggered, converting money into time")
                     print("Setting Active Time {0}".format(time_in_seconds))
-                    # Timedout, user is no longer inserting money into the machine
+                    # Timed out, user is no longer inserting money into the machine
                     self.light_manager.set_active_time(time_in_seconds)
-                    self.lcd_manager.set_message(1,"Per Hour: {0}".format(locale.currency(self.price_per_hour)))
+                    self.lcd_manager.set_message(1, "Per Hour: {0}".format(locale.currency(self.price_per_hour)))
+                    # Reset money for a new transaction
                     self.money = 0.00
 
-            if((time_since_inpulse > self.PULSE_INTERVAL)):
+            if time_since_impulse > self.PULSE_INTERVAL:
                 print("Pulses: {0}".format(self.pulses))
-                if(self.pulses > 0 and self.pulses < self.PULSES_DOLLAR):
-                    print("Pulses between 0 and 9 after a timeout, must be interference")
+                if 0 < self.pulses < self.PULSES_DOLLAR:
+                    print("Pulses between 0 and 9 after a timeout, must be interference. Resetting")
                     # line interference must be happening, reset the pulses back down to zero
                     self.pulses = 0
                 # Check the number of pulses received, if valid add to money counter
-                elif(self.pulses >= self.PULSES_DOLLAR and self.pulses < self.PULSES_TOONIE):
+                elif self.PULSES_DOLLAR <= self.pulses < self.PULSES_TOONIE:
                     print("Pulses between 10 and 19 after a timeout, must be a loonie")
                     self.pulses -= 10
-                    self.money+=1.00
-                    self.lcd_manager.set_message(1,"Money: {0}".format(locale.currency(self.money)))
+                    self.money += 1.00
+                    self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
                     # New currency has been added, tell the Lights class
-                elif(self.pulses >= self.PULSES_TOONIE):
+                elif self.pulses >= self.PULSES_TOONIE:
                     print("Pulses above 20 after a timeout, must be a toonie")
                     self.pulses -= 20
-                    self.money+=2.00
-                    self.lcd_manager.set_message(1,"Money: {0}".format(locale.currency(self.money)))
+                    self.money += 2.00
+                    self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
                     # New currency has been added, tell the Lights class

@@ -9,8 +9,8 @@ sudo pip install RPi.GPIO flask flask-classy
 git clone https://github.com/adafruit/Adafruit_Python_CharLCD.git
 cd Adafruit_Python_CharLCD
 sudo python setup.py install
-echo "Reconfiguring Locales. Please enable en_US.utf8"
+read -p "Reconfiguring Locales. Please enable en_US.utf8. Press [enter] to continue"
 sudo dpkg-reconfigure locales
 
-echo "Select Advanced Options > Enable I2C Driver/Interface > Load at Boot"
+read -p "Select Advanced Options > Enable I2C Driver/Interface > Load at Boot. Press [enter] to continue"
 sudo raspi-config

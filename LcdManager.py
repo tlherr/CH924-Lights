@@ -3,6 +3,8 @@ import time
 
 
 class LcdManager:
+
+    # Variables
     lcd = None
     message_top = ">Corner  Pocket<"
     message_bottom = "Per Hour: $5.00"
@@ -13,13 +15,12 @@ class LcdManager:
         self.lcd = LCD.Adafruit_CharLCDPlate()
         self.lcd.set_color(0.0, 0.0, 1.0)
 
-
     def set_message(self, line, message):
         assert isinstance(line, int)
         assert isinstance(message, str)
-        if(line==0):
+        if line == 0:
             self.message_top = message
-        elif(line==1):
+        elif line == 1:
             self.message_bottom = message
 
     def get_message(self):
