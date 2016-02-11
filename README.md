@@ -32,7 +32,7 @@ python main.py
 
 or use cron to automatically start on boot:
 ```bash
-@reboot sh /home/pi/CH924-Lights/launcher.sh >/home/pi/logs/lights 2>&1
+@reboot sh /home/pi/CH924-Lights/run.sh >/home/pi/logs/lights 2>&1
 ```
 
 To View the WebUI simply visit:
