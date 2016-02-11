@@ -19,8 +19,7 @@ class HTTPServerManager:
         self.app.add_url_rule('/api', view_func=RESTView.as_view('rest_view'), methods=['GET', 'POST', ])
 
     def start_server(self):
-        # TODO: Disable debug = True in production environment to avoid remote arbitrary code execution
-        self.app.run(host=self.HTTP_HOST, port=self.HTTP_PORT, debug=True, use_reloader=False)
+        self.app.run(host=self.HTTP_HOST, port=self.HTTP_PORT, debug=False, use_reloader=False)
         print time.asctime(), ">> HTTP Server Started - %s:%s <<" % (self.HTTP_HOST, self.HTTP_PORT)
 
     def stop_server(self):

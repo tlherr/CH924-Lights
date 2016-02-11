@@ -96,7 +96,7 @@ class LightManager:
             # disable the light
 
             if self.override:
-                print("Light Manager Override Detected, Light On")
+                # print("Light Manager Override Detected, Light On")
                 GPIO.output(self.PIN_LIGHT, True)
             elif self.time_remaining is not None:
                 if self.time_remaining > 0:
