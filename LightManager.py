@@ -23,14 +23,26 @@ class LightManager:
         GPIO.setup(self.PIN_LIGHT, GPIO.OUT)
         self.lcd_manager = lcd_manager
 
-    def check_time(self, seconds):
+    def check_min_time(self, seconds):
         assert isinstance(seconds, int)
         if seconds < self.MINIMUM_TIME:
             return False
-        elif seconds > self.MAXIMUM_TIME:
+        else:
+            return True
+
+    def check_max_time(self, seconds):
+        assert isinstance(seconds, int)
+        tmp = seconds + self.time_remaining
+        if tmp > self.MAXIMUM_TIME:
             return False
         else:
             return True
+
+    def is_active(self):
+        if self.time_remaining is not None:
+            return self.time_remaining > 0
+        else:
+            return False
 
     def set_active_time(self, seconds):
         assert isinstance(seconds, int)
@@ -41,7 +53,16 @@ class LightManager:
         else:
             self.expiration_time = self.activation_time + seconds
 
-        self.time_remaining = self.expiration_time - time.time()
+        if self.time_remaining is not None:
+            tmp = seconds + self.time_remaining
+        else:
+            tmp = seconds
+
+        if tmp > self.MAXIMUM_TIME:
+            self.time_remaining = self.MAXIMUM_TIME
+        else:
+            self.time_remaining = self.expiration_time - time.time()
+
         self.lcd_manager.lcd.set_color(0.0, 1.0, 0.0)
 
     def add_time_to_active(self, seconds):
