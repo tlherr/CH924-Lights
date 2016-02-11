@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import sys, os, traceback, optparse, signal
 import RPi.GPIO as GPIO
 import time
 
@@ -37,3 +38,16 @@ class CoinMachineDiag:
 
     while True:
         time.sleep(1)
+
+if __name__ == '__main__':
+    try:
+        CoinMachineDiag()
+    except KeyboardInterrupt, e: # Ctrl-C
+        raise e
+    except SystemExit, e: # sys.exit()
+        raise e
+    except Exception, e:
+        print 'ERROR, UNEXPECTED EXCEPTION'
+        print str(e)
+        traceback.print_exc()
+        os._exit(1)
