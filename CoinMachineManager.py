@@ -40,7 +40,7 @@ class CoinMachineManager:
         self.lcd_manager.set_message(1, "Per Hour: {0}".format(locale.currency(self.price_per_hour)))
 
     def coin_event_handler(self, pin):
-        print("Pulse Detected on Pin: {0}. Current Count: {1}".format(pin, self.pulses))
+        # print("Pulse Detected on Pin: {0}. Current Count: {1}".format(pin, self.pulses))
         self.lastImpulse = time.time()
         self.pulses += 1
 
@@ -54,7 +54,7 @@ class CoinMachineManager:
                 time_in_seconds = int(time_scalar * 60 * 60)
 
                 if self.light_manager.is_active():
-                        print("Adding Additional Time {0}".format(time_in_seconds))
+                        # print("Adding Additional Time {0}".format(time_in_seconds))
                         self.light_manager.add_time_to_active(time_in_seconds)
                         self.money = 0.00
 
@@ -64,8 +64,8 @@ class CoinMachineManager:
 
                     # Need to have at least the minimum amount required in order to activate
                     if self.light_manager.check_min_time(time_in_seconds):
-                        print("Timeout triggered, converting money into time")
-                        print("Setting Active Time {0}".format(time_in_seconds))
+                        # print("Timeout triggered, converting money into time")
+                        # print("Setting Active Time {0}".format(time_in_seconds))
                         # Timed out, user is no longer inserting money into the machine
                         self.light_manager.set_active_time(time_in_seconds)
                         self.lcd_manager.set_message(1, "Per Hour: {0}".format(locale.currency(self.price_per_hour)))
@@ -76,20 +76,20 @@ class CoinMachineManager:
                             locale.currency(self.price_per_hour / 2)), locale.currency(self.money))
 
             if time_since_impulse > self.PULSE_INTERVAL:
-                print("Pulses: {0}".format(self.pulses))
+                # print("Pulses: {0}".format(self.pulses))
                 if 0 < self.pulses < self.PULSES_DOLLAR:
-                    print("Pulses between 0 and 9 after a timeout, must be interference. Resetting")
+                    # print("Pulses between 0 and 9 after a timeout, must be interference. Resetting")
                     # line interference must be happening, reset the pulses back down to zero
                     self.pulses = 0
                 # Check the number of pulses received, if valid add to money counter
                 elif self.PULSES_DOLLAR <= self.pulses < self.PULSES_TOONIE:
-                    print("Pulses between 10 and 19 after a timeout, must be a loonie")
+                    # print("Pulses between 10 and 19 after a timeout, must be a loonie")
                     self.pulses -= 10
                     self.money += 1.00
                     if not self.light_manager.is_active():
                         self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
                 elif self.pulses >= self.PULSES_TOONIE:
-                    print("Pulses above 20 after a timeout, must be a toonie")
+                    # print("Pulses above 20 after a timeout, must be a toonie")
                     self.pulses -= 20
                     self.money += 2.00
                     if not self.light_manager.is_active():

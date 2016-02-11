@@ -1,22 +1,17 @@
 #!/usr/bin/env python
 """
-SYNOPSIS
-
-    TODO main [-h,--help] [-v,--verbose] [--version]
-
 DESCRIPTION
 
-    TODO This describes how to use this script. This docstring
-    will be printed by the script if there is an error or
-    if the user requests help (-h or --help).
+    Script designed to run a CH-924 Coin Counter and provide information to LCD Display
+    as well as a web UI
 
 EXAMPLES
 
-    TODO: Show some examples of how to use this script.
+    python main.py
 
 EXIT STATUS
 
-    TODO: List exit codes
+    Does not exit unless exception or user terminated
 
 AUTHOR
 
@@ -24,7 +19,7 @@ AUTHOR
 
 LICENSE
 
-    This script is in the public domain, free from copyrights or restrictions.
+    Read LICENCE
 
 VERSION
 

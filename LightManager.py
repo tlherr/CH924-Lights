@@ -100,17 +100,17 @@ class LightManager:
                 GPIO.output(self.PIN_LIGHT, True)
             elif self.time_remaining is not None:
                 if self.time_remaining > 0:
-                    print("Light Manager Active Time Detected")
+                    # print("Light Manager Active Time Detected")
                     GPIO.output(self.PIN_LIGHT, True)
                     self.time_remaining = self.expiration_time - time.time()
                     self.lcd_manager.set_message(0, "{0} Left".format(self.seconds_to_time(self.time_remaining)))
                 else:
-                    print("Light: Disabled")
+                    # print("Light: Disabled")
                     self.lcd_manager.set_message(0, ">Corner Pocket<")
                     self.time_remaining = None
                     GPIO.output(self.PIN_LIGHT, False)
                     self.lcd_manager.lcd.set_color(0.0, 0.0, 1.0)
             else:
-                print("Light: Disabled")
+                # print("Light: Disabled")
                 GPIO.output(self.PIN_LIGHT, False)
                 self.lcd_manager.lcd.set_color(0.0, 0.0, 1.0)
