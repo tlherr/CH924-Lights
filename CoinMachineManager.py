@@ -73,7 +73,7 @@ class CoinMachineManager:
                         self.money = 0.00
                     else:
                         self.lcd_manager.set_message(1, "{0} Req. Cur {1}".format(
-                            locale.currency(self.price_per_hour / 2)), locale.currency(self.money))
+                            locale.currency(self.price_per_hour / 2), locale.currency(self.money)))
 
             if time_since_impulse > self.PULSE_INTERVAL:
                 # print("Pulses: {0}".format(self.pulses))
