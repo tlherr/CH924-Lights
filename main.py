@@ -48,23 +48,22 @@ def main():
     lights = LightManager(lcd)
     coin_machine = CoinMachineManager(lcd, lights)
     http_server = HTTPServerManager(coin_machine, lights)
-    http_server.start_server()
 
-    lcd_thread = threading.Thread(target=lcd.run_screen,args=())
+    lcd_thread = threading.Thread(target=lcd.run_screen, args=())
     lcd_thread.daemon = True
     lcd_thread.start()
 
-    light_thread = threading.Thread(target=lights.run_lights,args=())
+    light_thread = threading.Thread(target=lights.run_lights, args=())
     light_thread.daemon = True
     light_thread.start()
 
-    coin_thread = threading.Thread(target=coin_machine.run_machine,args=())
-    coin_thread.daemon = True
-    coin_thread.start()
-
-    httpd_thread = threading.Thread(target=http_server.start_server,args=())
+    httpd_thread = threading.Thread(target=http_server.start_server, args=())
     httpd_thread.daemon = True
     httpd_thread.start()
+
+    coin_thread = threading.Thread(target=coin_machine.run_machine, args=())
+    coin_thread.daemon = True
+    coin_thread.start()
 
     print("All Threads Running. Application Ready")
 

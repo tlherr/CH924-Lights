@@ -11,6 +11,7 @@ class HTTPServerManager:
     app = Flask(import_name="CornerPocket")
 
     def __init__(self, coin_machine, light_manager):
+        print("Initializing HTTP Server Manager")
         log = logging.getLogger('werkzeug')
         log.setLevel(logging.ERROR)
 
