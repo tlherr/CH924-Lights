@@ -2,7 +2,6 @@
 
     $(document).ready(function() {
         var timeRemaning = $('#time_remaining');
-        refreshInfo();
 
         refreshInfo = function() {
             $.getJSON( "api", function( data ) {
@@ -13,6 +12,8 @@
 
             setTimeout(refreshInfo, 5000);
         }
+
+        refreshInfo();
 
         $('#light_enable').click(function(event) {
             $.ajax({
