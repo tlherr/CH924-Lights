@@ -37,11 +37,11 @@ or use cron to automatically start on boot:
 
 To View the WebUI simply visit:
 
-http://raspberrypiipaddress/admin
+http://raspberrypiipaddress:8000/admin
 
 API endpoints can be called from
 
-http://raspberrypiipaddress/api
+http://raspberrypiipaddress:8000/api
 
 ## Run on startup
 
@@ -56,6 +56,11 @@ Insert the following:
 ```
 
 This will run the script on system boot and log the output to /home/pi/logs/lights
+
+## Debugging
+
+If for any reason the webserver crashes a debug log will be generated in the project directory
+
 
 ## Wiring
 
