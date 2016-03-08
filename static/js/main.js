@@ -9,7 +9,7 @@
                 $.each( data, function( key, val ) {
                     $('span#'+key).text(val);
                  });
-            }
+            });
 
             setTimeout(refreshInfo, 5000);
         }
