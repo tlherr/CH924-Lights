@@ -48,6 +48,7 @@ def main():
     lights = LightManager(lcd)
     coin_machine = CoinMachineManager(lcd, lights)
     http_server = HTTPServerManager(coin_machine, lights)
+    http_server.start_server()
 
     lcd_thread = threading.Thread(target=lcd.run_screen,args=())
     lcd_thread.daemon = True

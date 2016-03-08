@@ -42,3 +42,21 @@ http://raspberrypiipaddress/admin
 API endpoints can be called from
 
 http://raspberrypiipaddress/api
+
+## Run on startup
+
+```bash
+crontab -e
+```
+
+Insert the following:
+
+```
+@reboot sh /home/pi/CH924-Lights/run.sh >/home/pi/logs/lights 2>&1
+```
+
+This will run the script on system boot and log the output to /home/pi/logs/lights
+
+## Wiring
+
+Below is a diagram of the coin machine wiring:
