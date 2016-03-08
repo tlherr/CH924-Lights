@@ -1,5 +1,6 @@
 from flask import Flask
 import time, logging
+from logging import FileHandler
 from AdminView import AdminView
 from RESTView import RESTView
 
@@ -12,8 +13,10 @@ class HTTPServerManager:
 
     def __init__(self, coin_machine, light_manager):
         print("Initializing HTTP Server Manager")
-        log = logging.getLogger('werkzeug')
-        log.setLevel(logging.ERROR)
+
+        file_handler = FileHandler("debug.log", "a")
+        file_handler.setLevel(logging.WARNING)
+        self.app.logger.addHandler(file_handler)
 
         AdminView.coin_machine = coin_machine
         AdminView.light_manager = light_manager
