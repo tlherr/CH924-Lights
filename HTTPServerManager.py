@@ -1,6 +1,10 @@
-from flask import Flask
-import time, logging
+import logging
+import time
+import os
 from logging import FileHandler
+
+from flask import Flask
+
 from AdminView import AdminView
 from RESTView import RESTView
 
@@ -9,7 +13,8 @@ class HTTPServerManager:
     # Variables
     HTTP_HOST = "0.0.0.0"
     HTTP_PORT = 8000
-    app = Flask(import_name="CornerPocket")
+    tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+    app = Flask(import_name="CornerPocket", template_folder=tmpl_dir)
 
     def __init__(self, coin_machine, light_manager):
         print("Initializing HTTP Server Manager")
