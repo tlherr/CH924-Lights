@@ -33,7 +33,7 @@ class CoinMachineManager:
         # Setup coin interrupt channel
         print("Setting Pin: {0} to Input mode, pulled down".format(self.PIN_COIN_INTERRUPT))
         GPIO.setup(self.PIN_COIN_INTERRUPT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-        GPIO.add_event_detect(self.PIN_COIN_INTERRUPT, GPIO.RISING, callback=self.coin_event_handler)
+        GPIO.add_event_detect(self.PIN_COIN_INTERRUPT, GPIO.RISING, callback=self.coin_event_handler, bouncetime=500)
 
     def set_price_per_hour(self, rate):
         self.price_per_hour = rate

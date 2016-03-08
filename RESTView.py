@@ -1,6 +1,5 @@
 from flask import render_template, request, jsonify
 from flask.views import MethodView
-import time
 import json
 
 
