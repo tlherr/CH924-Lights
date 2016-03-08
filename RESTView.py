@@ -13,7 +13,7 @@ class RESTView(MethodView):
                        price_per_hour=self.coin_machine.price_per_hour,
                        locked=self.coin_machine.is_locked,
                        override=self.light_manager.override,
-                       time_remaining=self.light_manager.time_remaining/60,
+                       time_remaining=self.light_manager.time_remaining,
                        time_activated=self.light_manager.activation_time,
                        time_expires=self.light_manager.expiration_time)
 
