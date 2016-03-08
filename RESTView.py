@@ -8,9 +8,13 @@ class RESTView(MethodView):
     light_manager = None
 
     def get(self):
-       return jsonify(money=self.coin_machine.money,
-                      price_per_hour=self.coin_machine.price_per_hour,
-                      time_remaining=self.light_manager.time_remaining)
+        return jsonify(money=self.coin_machine.money,
+                       price_per_hour=self.coin_machine.price_per_hour,
+                       locked=self.coin_machine.is_locked,
+                       override=self.light_manager.override,
+                       time_remaining=self.light_manager.time_remaining,
+                       time_activated=self.light_manager.activation_time,
+                       time_expires=self.light_manager.expiration_time)
 
     def post(self):
         light_override = request.form.get('light_override')

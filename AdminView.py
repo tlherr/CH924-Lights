@@ -11,7 +11,7 @@ class AdminView(MethodView):
 
     def post(self):
         error = None
-        price_per_hour = request.form.get('price_per_hour')
+        price_per_hour = request.form.get('price_per_hour_input')
         if price_per_hour is not None:
             try:
                 price = float(price_per_hour)
