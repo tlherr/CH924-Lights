@@ -60,3 +60,7 @@ This will run the script on system boot and log the output to /home/pi/logs/ligh
 ## Wiring
 
 Below is a diagram of the coin machine wiring:
+
+10K resistor used
+
+![diagram](http://fritzing.org/media/fritzing-repo/projects/c/ch924-coin-operated-lights/images/CH924_bb.png "Wiring")
