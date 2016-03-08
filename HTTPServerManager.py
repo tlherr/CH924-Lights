@@ -14,7 +14,7 @@ class HTTPServerManager:
     HTTP_HOST = "0.0.0.0"
     HTTP_PORT = 8000
     tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
-    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
     app = Flask(import_name="CornerPocket", template_folder=tmpl_dir, static_folder=static_dir)
 
     def __init__(self, coin_machine, light_manager):
