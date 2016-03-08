@@ -77,11 +77,14 @@ if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt, e: # Ctrl-C
+        GPIO.cleanup()
         raise e
     except SystemExit, e: # sys.exit()
+        GPIO.cleanup()
         raise e
     except Exception, e:
         print 'ERROR, UNEXPECTED EXCEPTION'
         print str(e)
+        GPIO.cleanup()
         traceback.print_exc()
         os._exit(1)
