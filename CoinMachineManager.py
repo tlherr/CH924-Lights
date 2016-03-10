@@ -85,5 +85,5 @@ class CoinMachineManager:
                         # Reset money for a new transaction
                         self.money = 0.00
                     else:
-                        self.lcd_manager.set_message(1, "{0} Min{1}".format(
+                        self.lcd_manager.set_message(1, "{0} Min: {1}".format(
                             locale.currency(self.money), locale.currency(self.price_per_hour / 2)))
