@@ -59,12 +59,12 @@ class CoinMachineManager:
                     self.pulses -= 10
                     self.money += 1.00
                     if not self.light_manager.is_active():
-                        self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
+                        self.lcd_manager.set_message(1, "{0}".format(locale.currency(self.money)))
                 elif self.pulses >= self.PULSES_TOONIE:
                     self.pulses -= 20
                     self.money += 2.00
                     if not self.light_manager.is_active():
-                        self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
+                        self.lcd_manager.set_message(1, "{0}".format(locale.currency(self.money)))
 
             # If money has been added and the user is done entering money add the time and reset money
             if self.money > 0:
@@ -85,5 +85,5 @@ class CoinMachineManager:
                         # Reset money for a new transaction
                         self.money = 0.00
                     else:
-                        self.lcd_manager.set_message(1, "{0} Min Cur {1}".format(
-                            locale.currency(self.price_per_hour / 2), locale.currency(self.money)))
+                        self.lcd_manager.set_message(1, "{0} Min{1}".format(
+                            locale.currency(self.money), locale.currency(self.price_per_hour / 2)))
