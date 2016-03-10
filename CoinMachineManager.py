@@ -46,6 +46,7 @@ class CoinMachineManager:
 
     def run_machine(self):
         while True:
+            time.sleep(0.5)
             time_since_impulse = time.time() - self.lastImpulse
 
             # Check for coin pulses to convert into dollar amount that has been entered into coin machine
