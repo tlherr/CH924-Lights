@@ -46,21 +46,33 @@ class CoinMachineManager:
 
     def run_machine(self):
         while True:
-            time.sleep(0.5)
             time_since_impulse = time.time() - self.lastImpulse
 
+            # Check for coin pulses to convert into dollar amount that has been entered into coin machine
+            if time_since_impulse > self.PULSE_INTERVAL:
+                # If the pulses are below our lowest coin (10 pulses) after a delay assume it is interference and reset
+                if 0 < self.pulses < self.PULSES_DOLLAR:
+                    self.pulses = 0
+                # Check the number of pulses received, if valid add to money counter
+                elif self.PULSES_DOLLAR <= self.pulses < self.PULSES_TOONIE:
+                    self.pulses -= 10
+                    self.money += 1.00
+                    if not self.light_manager.is_active():
+                        self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
+                elif self.pulses >= self.PULSES_TOONIE:
+                    self.pulses -= 20
+                    self.money += 2.00
+                    if not self.light_manager.is_active():
+                        self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
+
+            # If money has been added and the user is done entering money add the time and reset money
             if self.money > 0:
-                time_scalar = (self.money / self.price_per_hour)
-                time_in_seconds = int(time_scalar * 60 * 60)
-
-                if self.light_manager.is_active():
-                        # print("Adding Additional Time {0}".format(time_in_seconds))
-                        self.light_manager.add_time_to_active(time_in_seconds)
-                        self.money = 0.00
-
                 if time_since_impulse > self.TIMEOUT_INTERVAL:
                     # Timed out, no money has been inserted in the last 20 seconds.
                     # Assume the user is done entering coins
+
+                    time_scalar = (self.money / self.price_per_hour)
+                    time_in_seconds = int(time_scalar * 60 * 60)
 
                     # Need to have at least the minimum amount required in order to activate
                     if self.light_manager.check_min_time(time_in_seconds):
@@ -72,26 +84,5 @@ class CoinMachineManager:
                         # Reset money for a new transaction
                         self.money = 0.00
                     else:
-                        self.lcd_manager.set_message(1, "{0} Req. Cur {1}".format(
+                        self.lcd_manager.set_message(1, "{0} Min Cur {1}".format(
                             locale.currency(self.price_per_hour / 2), locale.currency(self.money)))
-
-            if time_since_impulse > self.PULSE_INTERVAL:
-                # print("Pulses: {0}".format(self.pulses))
-                if 0 < self.pulses < self.PULSES_DOLLAR:
-                    # print("Pulses between 0 and 9 after a timeout, must be interference. Resetting")
-                    # line interference must be happening, reset the pulses back down to zero
-                    self.pulses = 0
-                # Check the number of pulses received, if valid add to money counter
-                elif self.PULSES_DOLLAR <= self.pulses < self.PULSES_TOONIE:
-                    # print("Pulses between 10 and 19 after a timeout, must be a loonie")
-                    self.pulses -= 10
-                    self.money += 1.00
-                    if not self.light_manager.is_active():
-                        self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
-                elif self.pulses >= self.PULSES_TOONIE:
-                    # print("Pulses above 20 after a timeout, must be a toonie")
-                    self.pulses -= 20
-                    self.money += 2.00
-                    if not self.light_manager.is_active():
-                        self.lcd_manager.set_message(1, "Money: {0}".format(locale.currency(self.money)))
-                    # New currency has been added, tell the Lights class
